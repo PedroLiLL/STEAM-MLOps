@@ -5,11 +5,8 @@ import pandas as pd
 app = FastAPI(title='STEAM Games: Consultas', description='Esta aplicación permite realizar consultas sobre videojuegos, reseñas de usuarios, recomendaciones y más')
 
 # cargamos las tablas limpias en .parquet
-user_items = pd.read_parquet('user_items_norm.parquet')
-games = pd.read_parquet('games_norm.parquet')
-
-# Mergeamos los DFs para el consumo de la API
-items_games = pd.merge(user_items, games, how='inner', on=['item_id', 'title'])
+items_games = pd.read_parquet('items_games.parquet')
+reviews_games = pd.read_parquet('reviews_games.parquet')
 
 # ruta inicial
 @app.get("/")
