@@ -1,0 +1,6 @@
+anyio<=3.7.1
+fastapi<=0.104.0
+numpy<=1.26.1
+pandas<=2.1.2
+pyarrow<=13.0.0
+uvicorn<=0.23.2
