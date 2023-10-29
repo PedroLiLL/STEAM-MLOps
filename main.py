@@ -129,7 +129,7 @@ def UsersNotRecommend(anio: int):
         df = reviews_games[reviews_games['year_posted']>=reviews_games['year_release']]
 
         #Ahora filtramos por el año parámetro, recomendaciones negativas(0) y comentarios negativos (0)
-        df_anio_dado = df[(df['year_posted']==2015) & (df['recommend']==0) & (df['sentiment_analysis']==0)]
+        df_anio_dado = df[(df['year_posted']==anio) & (df['recommend']==0) & (df['sentiment_analysis']==0)]
 
         # Agrupamos respecto al año título del juego, contamos las recomendaciones('recommend') para tener los juegos con más reseñas negtivas y ordenamos de forma descendente
         grupo = df_anio_dado.groupby('title')['recommend'].count().sort_values(ascending=False)
