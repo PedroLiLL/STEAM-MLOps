@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 import pandas as pd
+#import psutil
 
 # Instanciamos un objeto de la clase fastapi para construir la aplicación
 app = FastAPI(title='STEAM Games: Consultas', description='Esta aplicación permite realizar consultas sobre videojuegos, reseñas de usuarios, recomendaciones y más')
 
 # cargamos las tablas limpias en .parquet
-items_games = pd.read_parquet('items_games.parquet')
+items_games_util = pd.read_parquet('items_games_util.parquet')
 reviews_games = pd.read_parquet('reviews_games.parquet')
 
 # ruta inicial
@@ -27,8 +28,8 @@ def PlayTimeGenre(genero: str):
         dict: diccionario con el género X y el año de lanzamiento con más horas jugadas
     
     '''
-    # Filtramos el dataframe 'items_games' respecto al parámetro genero
-    df_util = items_games[items_games['genres']== genero]
+    # Filtramos el dataframe 'items_games_util' respecto al parámetro genero
+    df_util = items_games_util[items_games_util['genres']== genero]
     
     # Agrupamos el dataframe anterior por año de lanzamiento, suma de minutos de juego y ordenamos en forma descendente
     agrupado = df_util.groupby('year_release')['playtime_forever'].sum().sort_values(ascending=False)
@@ -51,8 +52,8 @@ def UserForGenre(genero: str):
         dict: diccionario con el género X y el usuario con más horas jugadas
     
     '''
-    # Filtramos el dataframe 'items_games' respecto al parámetro genero
-    df_util = items_games[items_games['genres']== genero]
+    # Filtramos el dataframe 'items_games_util' respecto al parámetro genero
+    df_util = items_games_util[items_games_util['genres']== genero]
 
     # Agrupamos el dataframe anterior por usuario, suma de minutos de juego y ordenamos en forma descendente
     agrupado = df_util.groupby('user_id')['playtime_forever'].sum().sort_values(ascending=False)
@@ -169,3 +170,6 @@ def sentiment_analysis(anio: int):
         negativos = df_anio[df_anio['sentiment_analysis']==0].shape[0] # número de filas de sentimientos negativos(0)
 
         return {'Negative': negativos, 'Neutral': neutros, 'Positive': positivos}
+    
+
+#print(psutil.Process().memory_info().rss)
