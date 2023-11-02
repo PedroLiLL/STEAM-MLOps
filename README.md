@@ -4,9 +4,21 @@
 
 ## Introducción
 
+<table><tr><td valign="top" width="50%">
+
 Para este proyecto se simuló un ambiente de trabajo real en el que la plataforma de distribución digital de videojuegos STEAM necesita un sistema de recomendación de videojuegos para usuarios.
 
 Desarrollé un sistema de recomendación con un análisis completo, desde el ETL, entrenamiento y despliegue del modelo ML. Los datos disponibles requirieron una gran cantidad de trabajo de data engineering para poder usarlos en el modelo.
+
+</td><td valign="top" width="50%">
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/67664604/217914153-1eb00e25-ac08-4dfa-aaf8-53c09038f082.png" align="center" style="width: 100%" />
+</div>  
+
+
+</td></tr></table>  
+
 
 ## Objetivos
 
@@ -20,7 +32,7 @@ Se llevó a cabo los siguietes procesos:
 1. `Descripción del Problema`
     - Se presentaron las dificultades encontradas en el desarrollo y actualización de la plataforma.
     - La madurez de los datos es casi nula, datos anidados, no hay procesos automatizados para la actualización de nuevos productos, etc.
-    - Se debe hacer el proceso desde 0.
+    - La [fuente de datos](https://drive.google.com/drive/folders/1HqBG2-sUkz_R3h1dZU5F2uAzpRn7BSpj) posee archivos con información acerca de videojuegos; títulos, usuarios y distintos atributos de los mismos.
 
 2. `Data engineering`
     - **ETL (Extracción, Transformación y Carga de datos)**: Se realizó la extracción de datos desde su origen, transformación y limpieza para su uso futuro. El proceso de ETL se detalla en este [archivo](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/test/ETL.ipynb) y en general, todos los procesos de ingeniería de datos están detallados en esta [carpeta](https://github.com/PedroLiLL/STEAM-MLOps/tree/main/test)
@@ -60,29 +72,68 @@ Se llevó a cabo los siguietes procesos:
     - **Virtualenv** para crear el entorno virtual de python, instalar y manejar dependencias de manera aislada útiles para la creación de la API.
 
 <div align="center">  
-    <a target="_blank">
-        <img style="padding: 20px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Pandas_mark.svg/1200px-Pandas_mark.svg.png" alt="Pandas" height="40"/>
+    <a style="padding: 10px" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Pandas_mark.svg/1200px-Pandas_mark.svg.png" alt="Pandas" height="40"/>
     </a>  
-    <a target="_blank">
-        <img style="padding: 20px" src="https://cdn-images-1.medium.com/max/502/1*l0u9VaJUCE9kNcSqWVbsVA.png" alt="Numpy" height="40"/>
+    <a style="padding: 10px" target="_blank">
+        <img src="https://cdn-images-1.medium.com/max/502/1*l0u9VaJUCE9kNcSqWVbsVA.png" alt="Numpy" height="40"/>
     </a>
-    <a target="_blank">
-        <img style="padding: 20px" src="https://miro.medium.com/v2/resize:fit:592/0*zKRz1UgqpOZ4bvuA" alt="NLTK" height="40"/>
+    <a style="padding: 10px" target="_blank">
+        <img src="https://miro.medium.com/v2/resize:fit:592/0*zKRz1UgqpOZ4bvuA" alt="NLTK" height="40"/>
     </a>
-    <a target="_blank">
-        <img style="padding: 20px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png" alt="scikit" height="35"/>
+    <a style="padding: 10px" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png" alt="scikit" height="35"/>
     </a>
-    <a target="_blank">
-        <img style="padding: 20px" src="https://www.ccw.sk/files/img/images/5f493b167e5dc864a0265b30_json-logo.png" alt="json" height="35"/>
+    <a style="padding: 10px" target="_blank">
+        <img src="https://www.ccw.sk/files/img/images/5f493b167e5dc864a0265b30_json-logo.png" alt="json" height="35"/>
     </a>
-    <a target="_blank">
-        <img style="padding: 20px" src="https://cdn.worldvectorlogo.com/logos/fastapi.svg" alt="fastapi" height="35"/>
+    <a style="padding: 10px" target="_blank">
+        <img src="https://cdn.worldvectorlogo.com/logos/fastapi.svg" alt="fastapi" height="35"/>
     </a>
-    <a target="_blank">
-        <img style="padding: 20px" src="https://avatars.githubusercontent.com/u/42682871?s=280&v=4" alt="render" height="40"/>
+    <a style="padding: 10px" target="_blank">
+        <img  src="https://avatars.githubusercontent.com/u/42682871?s=280&v=4" alt="render" height="40"/>
     </a>
 </div>
 
 ## API
 
-![api](https://miro.medium.com/v2/resize:fit:1400/1*UaJYVrKSAEXLLYvpppNeOg.gif)
+![api](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/assets/1_UaJYVrKSAEXLLYvpppNeOg.gif?raw=true)
+
+Se desarrolló una API para disponibilizar los datos de la empresa a través del framework `FastAPI` compuesta de 6 endpoints (5 métodos y 1 modelo de recomendación) detalladas en el archivo [main.py](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/main.py). Dichos endpoints son:
+
+- `PlayTimeGenre(genero)` Devuelve el año con más horas jugadas para el género de entrada.
+
+    ```
+    return {Año de lanzamiento con más horas jugadas para género: año}
+    ```
+
+- `UserForGenre(genero)` Devuelve el usuario con mas horas jugadas para el género de entrada.
+
+    ```
+    return {Usuario con más horas jugadas para género: user, Horas jugadas: lista_horas_jugadas}
+    ```
+
+- `UserRecommend(año)` Devuelve el top 3 de juegos MÁS recomendados por usuarios para el año de entrada.
+
+    ```
+    return [{Puesto 1: juego1}, {Puesto 2: juego2}, {Puesto 3: juego3}]
+    ```
+
+- `UsersNotRecommend(anio)` Devuelve el top 3 de juegos MENOS recomendados por usuarios para el año de entrada.
+
+    ```
+    return [{Puesto 1: juego1}, {Puesto 2: juego2}, {Puesto 3: juego3}]
+    ```
+
+- `Sentiment_analysis(anio)` Según el año de entrada, devuelve una lista con la cantidad de registros de reseñas de usuarios que se encuentren categorizados con un análisis de sentimiento.
+
+    ```
+    return {'Negative': cantidad_negativos, 'Neutral': cantidad_neutros, 'Positive': cantidad_positivos}
+    ```
+
+- `Recomendacion_juego(id_producto)` Se ingresa el id de un producto y retorna una lista con 5 juegos recomendados similares al ingresado.
+
+Esta API le permitirá a al equipo de STEAM hacer solicitudes para obtener información o realizar acciones específicas.
+
+![DeployMail](../STEAM-MLOps/assets/main.png)
+![DeployDocs](../STEAM-MLOps/assets/docs.png)
