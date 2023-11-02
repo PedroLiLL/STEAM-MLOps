@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 import pandas as pd
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 #import psutil
 
 # Instanciamos un objeto de la clase fastapi para construir la aplicación
@@ -8,6 +11,7 @@ app = FastAPI(title='STEAM Games: Consultas', description='Esta aplicación perm
 # cargamos las tablas limpias en .parquet
 items_games_util = pd.read_parquet('items_games_util.parquet')
 reviews_games = pd.read_parquet('reviews_games.parquet')
+steam_games = pd.read_parquet('steam_games_ml.parquet')
 
 # ruta inicial
 @app.get("/")
@@ -141,7 +145,7 @@ def UsersNotRecommend(anio: int):
         return top3
 
 
-@app.get('/sentiment-analysis/{anio}', name='lista con la cantidad de registros de reseñas de usuarios')
+@app.get('/Sentiment-analysis/{anio}', name='lista con la cantidad de registros de reseñas de usuarios')
 def sentiment_analysis(anio: int):
     '''
     Según el año de lanzamiento, devuelve una lista con la cantidad de registros de reseñas de usuarios que se encuentren categorizados con un análisis de sentimiento
@@ -171,5 +175,38 @@ def sentiment_analysis(anio: int):
 
         return {'Negative': negativos, 'Neutral': neutros, 'Positive': positivos}
     
+
+# Creamos una instancia de la clase CountVectorizer
+vector = CountVectorizer(tokenizer= lambda x: x.split(', '))
+# Dividimos cada cadena de descripción en palabras individuales y se crea una matriz de conteo 'matriz_descripcion' que representa cuántas veces aparece cada género en cada videojuego.
+matriz_descripcion = vector.fit_transform(steam_games['description'])
+
+@app.get('/Juegos-recomendados/{id_producto}', name='lista con juegos recomendados por juego ingresado')
+def recomendacion_juego(id_producto: int):
+    '''
+    Se ingresa el id de producto (item_id) y retorna una lista con 5 juegos recomendados similares al ingresado (title).
+    
+    '''
+    # Si el id ingresado no se encuentra en la columna de id de la tabla 'steam_games' se le pide al usuario que intente con otro id
+    if id_producto not in steam_games['item_id'].values:
+        return 'El ID no existe, intente con otro'
+    else:
+        # buscamos el índice del id ingresado
+        index = steam_games.index[steam_games['item_id']==id_producto][0]
+
+        # De la matriz de conteo, tomamos el array de descripciones con índice igual a 'index'
+        description_index = matriz_descripcion[index]
+
+        # Calculamos la similitud coseno entre la descripción de entrada y la descripción de las demás filas: cosine_similarity(description_index, matriz_descripcion)
+        # Obtenemos los índices de las mayores similitudes mediante el método argsort() y las similitudes ordenadas de manera descendente
+        # Tomamos los índices del 1 al 6 [0, 1:6] ya que el índice 0 es el mismo índice de entrada
+        indices_maximos = np.argsort(-cosine_similarity(description_index, matriz_descripcion))[0, 1:6]
+
+        # Construimos la lista
+        recomendaciones = []
+        for i in indices_maximos:
+            recomendaciones.append(steam_games['title'][i])
+        
+        return recomendaciones
 
 #print(psutil.Process().memory_info().rss)
