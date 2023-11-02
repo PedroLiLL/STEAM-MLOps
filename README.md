@@ -1,4 +1,4 @@
-# STEAM Machine Learning Operations (MLOps)
+# <div align="center">**STEAM Machine Learning Operations (MLOps)**</div>
 
 ![Portada](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/assets/STEAM_MLOps.png?raw=true)
 
@@ -10,7 +10,7 @@ Desarrollé un sistema de recomendación con un análisis completo, desde el ETL
 
 ## Objetivos
 
-- `MVP`: Disponibilizar los datos de la plataforma mediante una API desplegada que permite su consumo desde la web.
+- `MVP` Disponibilizar los datos de la plataforma mediante una API desplegada que permite su consumo desde la web.
 - Desarrollar un sistema de recomendación de videojuegos.
 
 ## Desarrollo
@@ -37,4 +37,52 @@ Se llevó a cabo los siguietes procesos:
     
 4. `Machine learning`
     - **EDA y toma de desiciones**: Se llevó a cabo un análisis exploratorio de datos, entender qué dicen las columnas de los datos y tomar desiciones sobre las columnas necesarias para el entrenamiento del modelo.
-    - **Entrenamiento**: 
+    - **Entrenamiento**: Se entrenaron modelos detallados en el notebook [ML](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/test/ML.ipynb) para luego mandarlo al archivo **main.py**. Más información sobre el entrenamiento en la carpeta [test](https://github.com/PedroLiLL/STEAM-MLOps/tree/main/test).
+
+## Tecnología y herramientas
+
+1. **`Lenguajes`** Python fue el lenguaje principal utilizado para este proyecto.
+
+<div align="center">
+    <a href="https://www.python.org/" target="_blank">
+        <img style="margin: 30px" src="https://profilinator.rishav.dev/skills-assets/python-original.svg" alt="Python" height="50"/>
+    </a>
+</div>
+
+2. **`Librerías y frameworks`**
+    - **pandas** y **numpy** para la manipulación y procesamiento de datos.
+    - **os**, **datetime**, **gzip** y **json** para tareas del EDA como manipulación de estructuras de datos, carga de dataframes, entre otroas.
+    - **nltk** para el análisis de sentimiento.
+    - **psutil** para optimizar el consumo de memoria de la API.
+    - **scikit-learn** para el entrenamiento y modelado del sistema de recomendación de videojuegos.
+    - Framework **FastAPI** de python para consumir la API.
+    - Servicio en la nube **Render** para implementar la API.
+    - **Virtualenv** para crear el entorno virtual de python, instalar y manejar dependencias de manera aislada útiles para la creación de la API.
+
+<div align="center">  
+    <a target="_blank">
+        <img style="padding: 20px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Pandas_mark.svg/1200px-Pandas_mark.svg.png" alt="Pandas" height="40"/>
+    </a>  
+    <a target="_blank">
+        <img style="padding: 20px" src="https://cdn-images-1.medium.com/max/502/1*l0u9VaJUCE9kNcSqWVbsVA.png" alt="Numpy" height="40"/>
+    </a>
+    <a target="_blank">
+        <img style="padding: 20px" src="https://miro.medium.com/v2/resize:fit:592/0*zKRz1UgqpOZ4bvuA" alt="NLTK" height="40"/>
+    </a>
+    <a target="_blank">
+        <img style="padding: 20px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png" alt="scikit" height="35"/>
+    </a>
+    <a target="_blank">
+        <img style="padding: 20px" src="https://www.ccw.sk/files/img/images/5f493b167e5dc864a0265b30_json-logo.png" alt="json" height="35"/>
+    </a>
+    <a target="_blank">
+        <img style="padding: 20px" src="https://cdn.worldvectorlogo.com/logos/fastapi.svg" alt="fastapi" height="35"/>
+    </a>
+    <a target="_blank">
+        <img style="padding: 20px" src="https://avatars.githubusercontent.com/u/42682871?s=280&v=4" alt="render" height="40"/>
+    </a>
+</div>
+
+## API
+
+![api](https://miro.medium.com/v2/resize:fit:1400/1*UaJYVrKSAEXLLYvpppNeOg.gif)
