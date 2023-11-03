@@ -136,7 +136,7 @@ Se desarrolló una API para disponibilizar los datos de la empresa a través del
 Esta API le permitirá a al equipo de STEAM hacer solicitudes para obtener información o realizar acciones específicas.
 
 ![DeployMail](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/assets/main.png?raw=true)
-![DeployDocs](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/assets/docs.png?raw=true)
+![DeployDocs](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/assets/docss.png?raw=true)
 
 ## Modelo ML
 
