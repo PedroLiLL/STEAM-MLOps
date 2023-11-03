@@ -13,7 +13,7 @@ Desarrollé un sistema de recomendación con un análisis completo, desde el ETL
 </td><td valign="top" width="50%">
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/67664604/217914153-1eb00e25-ac08-4dfa-aaf8-53c09038f082.png" align="center" style="width: 100%" />
+<img src="https://user-images.githubusercontent.com/67664604/217914153-1eb00e25-ac08-4dfa-aaf8-53c09038f082.png" align="center" style="width: 70%" />
 </div>  
 
 
@@ -135,5 +135,31 @@ Se desarrolló una API para disponibilizar los datos de la empresa a través del
 
 Esta API le permitirá a al equipo de STEAM hacer solicitudes para obtener información o realizar acciones específicas.
 
-![DeployMail](../STEAM-MLOps/assets/main.png)
-![DeployDocs](../STEAM-MLOps/assets/docs.png)
+![DeployMail](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/assets/main.png?raw=true)
+![DeployDocs](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/assets/docs.png?raw=true)
+
+## Modelo ML
+
+![MLport](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/assets/DP-ML.gif?raw=true)
+
+Se desarrolló un sistema de recomendaciones utilizando contenido de la librería `Scikit-Learn`. Se aplicó la técnica de vectorización **One-Hot-Encoding** sobre las columnas de categorización (géneros, etiquetas y especificaciones de videojuegos), se representa como un vector de bits, con un "1" en la posición correspondiente y "0" en todas las demás. Además, se utilizó la **medida de similitud coseno** para calcular la similitud entre cada par de vectores de descripción de videojuegos, y ordearlos según su similitud.
+
+Para el desarrollo de este sistema se utilizó el siguiente proceso:
+
+- Se importa el dataset limpio [steam_games.parquet](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/Dataset/steam_games.parquet)
+- Se convierten las columnas `genres`, `tags` y `specs` a texto y se concatenan en una columna `description` para un procesamiento en conjunto.
+- Guardamos las columnas `item_id`, `title` y `description` en un nuevo datase [steam_games_ml.parquet](https://github.com/PedroLiLL/STEAM-MLOps/blob/main/steam_games_ml.parquet)
+
+El resultado es una función de recomendación de películas que toma el ID de un videojuego y retorna una lista con los 5 videojuegos más similares según su score. Si algún título no se encuentra en la base de datos, la función le hará saber al usuario y le pedirá que ingrese un ID diferente.
+
+## Deploy
+
+Para realizar el despliegue de la API que contienen las consultas y el sistema de recomendación de videojuegos se utilizó la plataforma de alojamiento en la nube `Render`. Esto permitirá al equipo de STEAM realizar consultas a través del siguiente link:
+
+👉[**PieroLi-STEAM-MLOps**](https://piero-li-api-steam-mlops-x825.onrender.com/docs)
+
+## Demostración
+
+A continuación, se presenta el video de demostración de la API en el siguiente link
+
+👉[**Video**]()
