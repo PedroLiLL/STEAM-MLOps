@@ -16,7 +16,7 @@ steam_games = pd.read_parquet('steam_games_ml.parquet')
 # ruta inicial
 @app.get("/")
 async def index():
-    mensaje = 'Bienvenidx a mi API para consultas sobre videojuegos, reseñas de usuarios y recomendaciones de la plataforma STEAM'
+    mensaje = 'Bienvenid@ a mi API para consultas sobre videojuegos, reseñas de usuarios y recomendaciones de la plataforma STEAM'
     return {'Mensaje': mensaje}
 
 
@@ -44,16 +44,16 @@ def PlayTimeGenre(genero: str):
     return {f"Año de lanzamiento con más horas jugadas para el género {genero}": int(anio)}
 
 
-@app.get("/User-For-Genre/{genero}", name="Usuario con mas horas jugadas para un género")
+@app.get("/User-For-Genre/{genero}", name="Usuario con mas minutos jugados para un género")
 def UserForGenre(genero: str):
     '''
-    devuelve el usuario con mas horas jugadas para dicho género
+    devuelve el usuario con mas minutos jugados para dicho género
 
     Args: 
         genero (str): género del juego
 
     return:
-        dict: diccionario con el género X y el usuario con más horas jugadas
+        dict: diccionario con el género X y el usuario con más minutos jugados
     
     '''
     # Filtramos el dataframe 'items_games_util' respecto al parámetro genero
@@ -68,13 +68,13 @@ def UserForGenre(genero: str):
     # tomamos las filas del dataframe util que contengan su repsectivo usuario (user)
     df_genero_user = df_util[df_util['user_id']==user]
 
-    # agrupamos respecto a los años y suma de minutos de juego y convertimos a horas de juego
-    horas_jugadas = round(df_genero_user.groupby('year_release')['playtime_forever'].sum()/60, 3)
+    # agrupamos respecto a los años y suma de minutos de juego
+    minutos_jugados = round(df_genero_user.groupby('year_release')['playtime_forever'].sum(), 3)
 
-    # Guardamos la serie 'horas_jugadas' en una lista
-    lista_horas_jugadas = [f'Año: {int(anio)}, Horas: {horas}' for anio, horas in horas_jugadas.items()]
+    # Guardamos la serie 'minutos_jugados' en una lista
+    lista_minutos_jugados = [{f'Año': int(anio), 'Minutos': minutos} for anio, minutos in minutos_jugados.items()]
 
-    return {f"Usuario con más horas jugadas para género {genero}": user, "Horas jugadas": lista_horas_jugadas}
+    return {f"Usuario con más minutos jugados para género {genero}": user, "Minutos jugados": lista_minutos_jugados}
 
 
 @app.get("/User-Recommend/{anio}", name="Top 3 de juegos MÁS recomendados por usuarios por año")
