@@ -162,4 +162,4 @@ Para realizar el despliegue de la API que contienen las consultas y el sistema d
 
 A continuación, se presenta el video de demostración de la API en el siguiente link
 
-👉[**Video**]()
+👉[**Video**](https://www.youtube.com/watch?v=pkh2OlOa23Y&t=91s)
